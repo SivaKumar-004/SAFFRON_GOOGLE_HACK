@@ -1,0 +1,7 @@
+node_modules
+dist
+.env
+clear3core.db
+clear3core.db-shm
+clear3core.db-wal
+.DS_Store
