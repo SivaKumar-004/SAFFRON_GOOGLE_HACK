@@ -26,6 +26,22 @@ export default async function repairRoutes(fastify, options) {
         }
     });
 
+    fastify.get('/api/assets', async (request, reply) => {
+        try {
+            // Join Assets with their Facilities to provide location context
+            const assets = db.prepare(`
+                SELECT a.id, a.type, a.status, a.usage_pattern_factor, 
+                       f.name as facility_name
+                FROM Assets a
+                JOIN Facilities f ON a.facility_id = f.id
+            `).all();
+            return reply.code(200).send(assets);
+        } catch (error) {
+            fastify.log.error(error);
+            return reply.code(500).send({ error: "Failed to fetch assets" });
+        }
+    });
+
     fastify.get('/health', async (request, reply) => {
         return { status: 'healthy', service: 'CLEAR-3 Orchestration Core' };
     });

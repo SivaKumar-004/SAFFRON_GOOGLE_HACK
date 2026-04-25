@@ -1,3 +1,4 @@
+import 'dotenv/config';
 import Fastify from 'fastify';
 import { initializeDB } from './src/db/database.js';
 import repairRoutes from './src/routes/repairRoutes.js';
